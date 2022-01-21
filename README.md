@@ -1,6 +1,7 @@
 # 电量信息
 
 Quasar v2 + Vue3 + Cordova 开发的电量信息demo，面向移动端
+
 预览：https://fange173.github.io/quasar-power/dist/spa/#/
 
 # Quasar App (quasar-demo)
