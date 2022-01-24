@@ -1,9 +1,9 @@
 <template>
-  <q-header elevated>
+  <q-header elevated class="bg-indigo">
     <q-toolbar>
       <q-toolbar-title>
         电量数据
-        <span style="font-size: 16px">星恒48v24a</span>
+        <span style="font-size: 16px">(星恒48V24Ah)</span>
       </q-toolbar-title>
       <q-btn flat round dense>
         <q-icon name="settings" @click="openDialog = !openDialog" />
@@ -80,7 +80,7 @@
             <div class="absolute-full flex flex-center">
               <q-slider
                 v-model="voltage"
-                color="primary"
+                color="indigo"
                 :min="43"
                 :step="0.5"
                 :max="53.85"
@@ -119,22 +119,34 @@
       <q-card-section>
         <div class="text-h6">配置</div>
       </q-card-section>
-
       <q-card-section class="text-body1 q-pt-none">
-        <div class="row" style="min-width: 200px; line-height: 40px">
-          夜间模式
-          <q-space />
-          <q-toggle
-            v-model="openDark"
-            color="primary"
-            class="q-pa-none"
-            @click="toggleDark"
-          />
-        </div>
+        <q-list dense style="min-width: 300px">
+          <q-item>
+            <q-item-section side>
+              <q-icon color="purple" name="dark_mode" />
+            </q-item-section>
+            <q-item-section>夜间模式</q-item-section>
+            <q-item-section side
+              ><q-toggle
+                v-model="openDark"
+                color="indigo"
+                class="q-pa-none"
+                @click="toggleDark"
+            /></q-item-section>
+          </q-item>
+          <q-separator spaced inset />
+          <q-item>
+            <q-item-section side>
+              <q-icon color="indigo" name="change_circle" />
+            </q-item-section>
+            <q-item-section>电池类型</q-item-section>
+            <q-item-section side
+              ><q-select dense disable filled style="min-width: 100px" /></q-item-section>
+          </q-item>
+        </q-list>
       </q-card-section>
-
       <q-card-actions align="right">
-        <q-btn flat label="OK" color="primary" v-close-popup />
+        <q-btn flat label="OK" color="indigo" v-close-popup />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -167,7 +179,7 @@ const option = {
     name: '剩余里程(KM)', // X轴 name
     nameTextStyle: {
       // 坐标轴名称的文字样式
-      color: '#1976D2',
+      color: '#3f51b5',
       fontSize: 16,
       padding: [75, 0, 0, -80],
     },
@@ -181,7 +193,7 @@ const option = {
   yAxis: {
     name: '电压(V)',
     nameTextStyle: {
-      color: '#1976D2',
+      color: '#3f51b5',
       fontSize: 16,
       padding: [0, 0, 5, 0],
     },
