@@ -1,0 +1,3 @@
+**/node_modules
+# 避免kaniko无视发布文件夹。参考：https://github.com/GoogleContainerTools/kaniko/issues/552#issuecomment-605513569
+# **/dist
