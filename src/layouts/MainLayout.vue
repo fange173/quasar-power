@@ -1,8 +1,6 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <keep-alive>
-      <router-view />
-    </keep-alive>
+    <router-view />
   </q-layout>
 </template>
 
