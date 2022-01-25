@@ -353,7 +353,7 @@ export default defineComponent({
         myChart.dispatchAction({
           type: 'showTip',
           seriesIndex: 0,
-          dataIndex: Math.round((kilometer(newValue) / 65.2) * 10),
+          dataIndex: 10 - Math.round((kilometer(newValue) / 65.2) * 10),
         });
       });
     });
