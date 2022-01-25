@@ -69,7 +69,7 @@
         </q-card-section>
       </q-card>
 
-      <div class="row" style="text-align: center; margin-top: 20px">
+      <div class="row" style="text-align: center; margin-top: 20px" v-if="sliderType === '电压'">
         <div class="col-9">
           <q-linear-progress
             stripe
@@ -94,6 +94,37 @@
             color="purple"
             v-model="voltage"
             label="电压(V)"
+            style="font-size: 18px"
+          />
+        </div>
+      </div>
+
+      <div class="row" style="text-align: center; margin-top: 20px" v-else-if="sliderType === '电量'">
+        <div class="col-9">
+          <q-linear-progress
+            stripe
+            size="56px"
+            :value="( voltage - 43) / ( 53.85 - 43 )"
+            color="indigo"
+          >
+            <div class="absolute-full flex flex-center">
+              <q-slider
+                v-model="power"
+                :color="color"
+                :min="0"
+                :step="10"
+                :max="100"
+              />
+            </div>
+          </q-linear-progress>
+        </div>
+        <div class="col-3">
+          <q-input
+            filled
+            disabled
+            :color="color"
+            v-model="power"
+            label="电量(%)"
             style="font-size: 18px"
           />
         </div>
@@ -133,6 +164,15 @@
                 class="q-pa-none"
                 @click="toggleDark"
             /></q-item-section>
+          </q-item>
+          <q-separator spaced inset />
+          <q-item>
+            <q-item-section side>
+              <q-icon color="orange" name="linear_scale" />
+            </q-item-section>
+            <q-item-section>滑块类型</q-item-section>
+            <q-item-section side
+              ><q-select dense filled v-model="sliderType" :options="['电压', '电量']" style="min-width: 100px" /></q-item-section>
           </q-item>
           <q-separator spaced inset />
           <q-item>
@@ -275,10 +315,12 @@ export default defineComponent({
   name: 'PageIndex',
   setup() {
     const voltage = ref(53.85);
+    const power = ref(100);
     const color = ref('green');
     const openDialog = ref(false);
     const openDark = ref();
     const $q = useQuasar();
+    const sliderType = ref('电压');
 
     watch(voltage, (newVal) => {
       if (percentage(newVal) >= 0 && percentage(newVal) < 10)
@@ -286,6 +328,48 @@ export default defineComponent({
       else if (percentage(newVal) > 10 && percentage(newVal) < 30)
         color.value = 'orange';
       else color.value = 'green';
+    });
+
+    watch(sliderType, () => {
+      voltage.value = 53.85;
+      power.value = 100;
+    });
+
+    watch(power, (newVal) => {
+      switch(newVal) {
+        case 100: 
+          voltage.value = 53.85;
+          break;
+        case 90: 
+          voltage.value = 52.31;
+          break;
+        case 80: 
+          voltage.value = 51.77;
+          break;
+        case 70: 
+          voltage.value = 51.29;
+          break;
+        case 60: 
+          voltage.value = 50.86;
+          break;
+        case 50: 
+          voltage.value = 50.31;
+          break;
+        case 40: 
+          voltage.value = 49.74;
+          break;
+        case 30: 
+          voltage.value = 49.14;
+          break;
+        case 20: 
+          voltage.value = 48.42;
+          break;
+        case 10: 
+          voltage.value = 47.45;
+          break;
+        case 0: 
+          voltage.value = 43;
+      }
     });
 
     function numFilter(value: any) {
@@ -360,6 +444,7 @@ export default defineComponent({
 
     return {
       voltage,
+      power,
       numFilter,
       percentage,
       ampere,
@@ -368,6 +453,7 @@ export default defineComponent({
       openDialog,
       openDark,
       toggleDark,
+      sliderType,
     };
   },
 });
